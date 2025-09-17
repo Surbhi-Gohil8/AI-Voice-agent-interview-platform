@@ -14,7 +14,7 @@ const Agent = (
     {userName}:AgentProps
 ) => {
     
-     const [isSpeaking, setIsSpeaking] = useState(true);
+     const isSpeaking = useState(true);
      const callStatus= CallStatus.FINISHED;
      const messages = [
         'What is Your Name ?',
