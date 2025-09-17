@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useId } from "react";
 
 type FormFieldProps<T extends FieldValues> = {
   control: Control<T>;
@@ -25,15 +26,23 @@ export default function FormField<T extends FieldValues>({
   placeholder,
   type = "text",
 }: FormFieldProps<T>) {
+  const id = useId(); // 🔑 generates consistent SSR+CSR id
+
   return (
     <ShadFormField
       control={control}
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel htmlFor={id}>{label}</FormLabel>
           <FormControl>
-            <Input className="input" {...field} placeholder={placeholder} type={type} />
+            <Input
+              id={id}
+              className="input"
+              {...field}
+              placeholder={placeholder}
+              type={type}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
