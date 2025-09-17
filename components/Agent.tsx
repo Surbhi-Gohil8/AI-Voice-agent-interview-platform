@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+
 enum CallStatus {
   INACTIVE = "INACTIVE",
   CONNECTING = "CONNECTING",
@@ -9,18 +10,15 @@ enum CallStatus {
   FINISHED = "FINISHED",
 }
 
+const Agent = ({ userName }: AgentProps) => {
+  const [isSpeaking] = useState(true);
+  const callStatus = CallStatus.FINISHED;
+  const messages = [
+    'What is Your Name ?',
+    'My name is John Doe, nice to meet you..'
+  ];
+  const lastMessage = messages[messages.length - 1];
 
-const Agent = (
-    {userName}:AgentProps
-) => {
-    
-     const isSpeaking = useState(true);
-     const callStatus= CallStatus.FINISHED;
-     const messages = [
-        'What is Your Name ?',
-        'My name is John Doe,nice to meet you..'
-     ]
-     const lastMessage=messages[messages.length-1];
   return (
     <>
       <div className="call-view">
@@ -34,11 +32,12 @@ const Agent = (
               height={54}
               className="object-cover"
             />
-             {isSpeaking && <span className="animate-speak" />}
+            {isSpeaking && <span className="animate-speak" />}
           </div>
           <h3>AI Interviewer</h3>
         </div>
-         <div className="card-border">
+
+        <div className="card-border">
           <div className="card-content">
             <Image
               src="/user-avatar.png"
@@ -50,8 +49,9 @@ const Agent = (
             <h3>{userName}</h3>
           </div>
         </div>
-    </div>
-          {messages.length > 0 && (
+      </div>
+
+      {messages.length > 0 && (
         <div className="transcript-border">
           <div className="transcript">
             <p
@@ -68,10 +68,8 @@ const Agent = (
       )}
 
       <div className="w-full flex justify-center">
-        {callStatus !== "ACTIVE" ? (
-          <button className="relative btn-call" >
-       
-
+        {callStatus !== "FINISHED" ? (
+          <button className="relative btn-call">
             <span className="relative">
               {callStatus === "INACTIVE" || callStatus === "FINISHED"
                 ? "Call"
@@ -79,13 +77,11 @@ const Agent = (
             </span>
           </button>
         ) : (
-          <button className="btn-disconnect" >
-            End
-          </button>
+          <button className="btn-disconnect">End</button>
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Agent
+export default Agent;
